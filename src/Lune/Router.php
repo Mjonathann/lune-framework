@@ -1,7 +1,6 @@
 <?php 
- require_once "./HttpMethod.php";
- require_once "./HttpNotFoundException.php";
 
+ namespace Lune;
  class Router{
    
     protected array $routes = [];
