@@ -2,14 +2,16 @@
 
 namespace Lune;
 
+use Closure;
+
 class Route
 {
     protected string $uri;
-    protected \Closure $action;
+    protected Closure $action;
     protected string $regex;
     protected array $parameters;
 
-    public function __construct(string $uri, \Closure $action){
+    public function __construct(string $uri, Closure $action){
         $this->uri = $uri;
         $this->action = $action;
         
@@ -24,12 +26,12 @@ class Route
         return $this->uri;
     }
 
-    public function action() {
+    public function action() : Closure{
         return $this->action;
     }
 
     public function matches(string $uri) : bool {
-        return preg_match("#^$this->regex$#", $uri);
+        return preg_match("#^$this->regex/?$#", $uri);
     }
 
     public function hasParameters() {
