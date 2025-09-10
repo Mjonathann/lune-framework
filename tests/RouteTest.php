@@ -6,6 +6,10 @@ use Lune\Route;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\Attributes\Group;
+use PHPUnit\Framework\Attributes\DataProvider;
+
 class RouteTest extends TestCase
 {
     public static function routesWithNoParameters()
@@ -58,10 +62,9 @@ class RouteTest extends TestCase
     }
 
 
-    /**
-     * @dataProvider routesWithNoParameters
-     * 
-     */
+    #[Test]
+    #[Group('routes')]
+    #[DataProvider('routesWithNoParameters')]
     public function test_regex_with_no_parameters(string $uri)
     {
 
@@ -72,19 +75,17 @@ class RouteTest extends TestCase
         $this->assertFalse($route->matches("/random/path"));
     }
 
-    /**
-     * @dataProvider routesWithNoParameters
-     * 
-     */
+    #[Test]
+    #[Group('routes')]
+    #[DataProvider('routesWithNoParameters')]
     public function test_regex_on_uri_that_ends_with_slash(string $uri){
         $route = new Route($uri, fn () => 'Test');
         $this->assertTrue($route->matches($uri. "/"));
     }
 
-    /**
-     * @dataProvider routesWithParameters
-     * 
-     */
+    #[Test]
+    #[Group('routes')]
+    #[DataProvider('routesWithParameters')]
     public function test_regex_with_parameters(string $definition, string $uri)
     {
 
@@ -95,10 +96,9 @@ class RouteTest extends TestCase
         $this->assertFalse($route->matches("/random/path"));
     }
 
-    /**
-     * @dataProvider routesWithParameters
-     * 
-     */
+    #[Test]
+    #[Group('routes')]
+    #[DataProvider('routesWithParameters')]
     public function test_parse_parameters(string $definition, string $uri, array $expectedParameters)
     {
         $route = new Route($definition,  fn () => "test");
