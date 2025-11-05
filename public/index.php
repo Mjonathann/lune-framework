@@ -2,7 +2,9 @@
 require '../vendor/autoload.php';
 use Lune\Router;
 use Lune\HttpNotFoundException;
+use Lune\Request;
 use Lune\Route;
+use Lune\Server;
 
 $router = new Router();
 
@@ -30,7 +32,7 @@ try {
     $method = $_SERVER['REQUEST_METHOD'];
     $uri = $_SERVER['REQUEST_URI'];
 
-    $route = $router->resolve($uri, $method);
+    $route = $router->resolve(new Request(new Server()));
     $action = $route->action();
     print($action()); 
 } catch (HttpNotFoundException $e) {
